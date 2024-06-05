@@ -53,8 +53,8 @@ This dataset allows us to analyze temperature trends by country and correlate th
 <!-- List of work packages ordered sequentially, each pointing to an issue with more details. -->
 
 1. Data Collection and Cleaning [#1][i1]
-2. Exploratory Data Analysis (EDA) [#2][i2]
-3. Geospatial Analysis [#3][i3]
+2. Exploratory Data Analysis [#2][i2]
+3. Data Integration [#3][i3]
 4. Statistical Correlation Analysis [#4][i4]
 5. Report Writing and Visualization [#5][i5]
 
