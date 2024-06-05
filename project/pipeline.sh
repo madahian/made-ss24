@@ -1,2 +1,2 @@
 #!/bin/bash
-jv mls.jv
+python /project/pipeline.py

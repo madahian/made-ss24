@@ -2,28 +2,51 @@
 
 ## Title
 <!-- Give your project a short title. -->
-Analysis of MLS Teams and Stadium Locations
+Correlation Analysis between Agricultural CO2 Emissions and Average Temperature Changes
 
 ## Main Question
 
 <!-- Think about one main question you want to answer based on the data. -->
-1. How does the geographic distribution of MLS stadiums correlate with team performance and fan attendance?
+1. How do agricultural CO2 emissions correlate with average temperature changes in various countries between the years 2000 and 2010?
 
 ## Description
 
 <!-- Describe your data science project in max. 200 words. Consider writing about why and how you attempt it. -->
-The geographic distribution of sports teams can offer unique insights into regional support, potential market gaps, and logistical considerations for leagues. This project focuses on Major League Soccer (MLS) in the USA, examining the locations of the teams' stadiums and their capacities. By analyzing the provided data, we aim to understand how the location of stadiums affects team performance and fan attendance. We will use geospatial analysis, alongside statistical methods, to find correlations and trends that can provide valuable insights for league organizers and team management.
+Understanding the relationship between agricultural CO2 emissions and climate change is crucial for developing sustainable practices and mitigating climate change impacts. This project aims to analyze the correlation between total agricultural CO2 emissions and average temperature changes in various countries from 2000 to 2010.
+
+We will use two comprehensive datasets for this analysis. The first dataset, constructed by merging data from the Food and Agriculture Organization (FAO) and the IPCC, provides detailed information on CO2 emissions from various agricultural activities. The second dataset, sourced from the Berkeley Earth Surface Temperature Study, offers long-term global temperature data, allowing us to study temperature trends by country.
+
+By leveraging statistical and data processing techniques, we aim to uncover significant relationships between agricultural emissions and temperature changes. The findings will provide valuable insights for policymakers and researchers working on climate action and sustainable agricultural practices.
 
 ## Datasources
 
-<!-- Describe each datasources you plan to use in a section. Use the prefix "DatasourceX" where X is the id of the datasource. -->
+<!-- Describe each datasource you plan to use in a section. Use the prefix "DatasourceX" where X is the id of the datasource. -->
 
-### Datasource1: MLS Teams and Stadium Locations
-* Metadata URL: [https://github.com/gavinr/usa-soccer/blob/master/mls.csv]
-* Data URL: [https://gavinr.com/maps/usa-soccer/]
+### Datasource1: Agri-food CO2 emission dataset
+* Data URL: [https://www.kaggle.com/datasets/alessandrolobello/agri-food-co2-emission-dataset-forecasting-ml](https://www.kaggle.com/datasets/alessandrolobello/agri-food-co2-emission-dataset-forecasting-ml)
 * Data Type: CSV
 
-This datasource contains information about the current Major League Soccer (MLS) league teams, including metadata and locations of their stadiums. The dataset includes columns for team names, cities, states, stadium latitude and longitude, stadium capacity, year joined, head coach, and URLs for more information.
+#### Description:
+The agricultural CO2 emission dataset has been constructed by merging and reprocessing approximately a dozen individual datasets from the Food and Agriculture Organization (FAO) and data from IPCC. These datasets were cleaned, preprocessed, and merged together to create a comprehensive and cohesive dataset for analysis and forecasting purposes.
+
+The dataset describes CO2 emissions related to agri-food, which amount to approximately 62% of the global annual emissions. It includes features such as emissions from savanna fires, forest fires, crop residues, rice cultivation, and more. This dataset plays a crucial role in understanding and monitoring the impact of agricultural activities on CO2 emissions.
+
+### Datasource2: Climate Change - Earth Surface Temperature Data
+* Data URL: [https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data?select=GlobalTemperatures.csv](https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data?select=GlobalTemperatures.csv)
+* Selected Data: GlobalLandTemperaturesByCountry.csv
+* Data Type: CSV
+
+#### Description:
+This dataset is sourced from the Berkeley Earth Surface Temperature Study and combines 1.6 billion temperature reports from 16 pre-existing archives. It provides global land and ocean temperature data, including average temperatures, maximum and minimum temperatures, and their uncertainties.
+
+The dataset includes several files:
+- Global Land and Ocean-and-Land Temperatures (GlobalTemperatures.csv)
+- Global Average Land Temperature by Country (GlobalLandTemperaturesByCountry.csv)
+- Global Average Land Temperature by State (GlobalLandTemperaturesByState.csv)
+- Global Land Temperatures By Major City (GlobalLandTemperaturesByMajorCity.csv)
+- Global Land Temperatures By City (GlobalLandTemperaturesByCity.csv)
+
+This dataset allows us to analyze temperature trends by country and correlate them with agricultural CO2 emissions.
 
 ## Work Packages
 
