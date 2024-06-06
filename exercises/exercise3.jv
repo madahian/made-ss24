@@ -1,0 +1,78 @@
+pipeline Exercise3 {
+  Exercise3Extractor -> Exercise3TextFileInterpreter;
+  Exercise3TextFileInterpreter
+      -> Exercise3CSVInterpreter
+      -> HeaderTimeSequenceWriter
+      -> HeaderQuantitySequenceWriter
+      -> Exercise3CoreDataSelector
+      -> Exercise3TableInterpreter
+      -> Exercise3Loader;
+
+  block Exercise3Extractor oftype HttpExtractor {
+      url: "https://www-genesis.destatis.de/genesis/downloads/00/tables/46131-0014_00.csv";
+  }
+
+  block Exercise3CSVInterpreter oftype CSVInterpreter {
+      delimiter: ';';
+  }
+
+  block Exercise3TextFileInterpreter oftype TextFileInterpreter {
+      encoding : "latin3";
+  }
+
+  valuetype Positive oftype integer {
+      constraints: [ positiveValue ];
+  }
+
+  constraint positiveValue oftype RangeConstraint {
+      lowerBound: 0;
+  }
+
+  valuetype Month oftype text {
+      constraints: [ deMonth ];
+  }
+
+  constraint deMonth oftype AllowlistConstraint {
+      allowlist: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+  }
+
+  valuetype Id oftype text {
+      constraints: [ goodsID ];
+  }
+
+  constraint goodsID oftype RegexConstraint {
+      regex: /^NST7-[0-9A-Z]{3}$/;
+  }
+
+  block HeaderTimeSequenceWriter oftype CellWriter {
+      at: range A8:E8;
+      write: ["year", "month", "goods_id", "goods_name", "goods_source"];
+  }
+
+  block HeaderQuantitySequenceWriter oftype CellWriter {
+      at:  range AT8:AU8;
+      write: ["abroad", "total"];
+  }
+
+  block Exercise3CoreDataSelector oftype CellRangeSelector {
+      select: range A8:AU*;
+  }
+
+  block Exercise3TableInterpreter oftype TableInterpreter {
+      header: true;
+      columns: [
+        "year" oftype Positive,
+	      "month" oftype Month,
+	      "goods_id" oftype Id,
+	      "goods_name" oftype text,
+	      "goods_source" oftype text,
+	      "abroad" oftype Positive,
+        "total" oftype Positive,
+      ];
+  }
+
+  block Exercise3Loader oftype SQLiteLoader {
+      table: "goods";
+      file: "./goodsTransportedByTrain.sqlite";
+  }
+}
