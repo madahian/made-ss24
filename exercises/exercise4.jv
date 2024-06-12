@@ -1,26 +1,26 @@
 pipeline Exercise4 {
-  Exercise4Extractor -> ZipArchiveInterpreter;
-  ZipArchiveInterpreter
-    -> DataPicker
+  Exercise4Extractor -> Exercise4Unarchiver;
+  Exercise4Unarchiver
+    -> Exercise4FilePicker
     -> Exercise4TextFileInterpreter
     -> Exercise4CSVInterpreter
-    -> HeaderExercise4SequenceWriter
-    -> HeaderExercise4Writer
+    -> Exercise4CellWriter
+    -> Exercise4HeaderCellWriter
     -> Exercise4CoreDataSelector
     -> Exercise4TableInterpreter
-    -> TempExercise4Transformer
-    -> BatteryExercise4Transformer
+    -> Exercise4TempTransformer
+    -> Exercise4BatteryTransformer
     -> Exercise4Loader;
 
   block Exercise4Extractor oftype HttpExtractor {
       url: "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip";
   }
 
-  block ZipArchiveInterpreter oftype ArchiveInterpreter {
+  block Exercise4Unarchiver oftype ArchiveInterpreter {
       archiveType: "zip";
   }
 
-  block DataPicker oftype FilePicker {
+  block Exercise4FilePicker oftype FilePicker {
       path: "/data.csv";
   }
 
@@ -38,12 +38,12 @@ pipeline Exercise4 {
       lowerBound: 0;
   }
 
-  block HeaderExercise4SequenceWriter oftype CellWriter {
+  block Exercise4CellWriter oftype CellWriter {
       at: range A1:E1;
       write: ["id", "producer", "model", "month", "temperature"];
   }
 
-  block HeaderExercise4Writer oftype CellWriter {
+  block Exercise4HeaderCellWriter oftype CellWriter {
       at: cell J1;
       write: ["battery_temperature"];
   }
@@ -70,13 +70,13 @@ pipeline Exercise4 {
       Fahrenheit : (Celsius * 9/5) + 32;
   }
 
-  block TempExercise4Transformer oftype TableTransformer {
+  block Exercise4TempTransformer oftype TableTransformer {
       inputColumns: ["temperature"];
       outputColumn: "temperature";
       use: CelsiusToFahrenheit;
   }
 
-  block BatteryExercise4Transformer oftype TableTransformer {
+  block Exercise4BatteryTransformer oftype TableTransformer {
       inputColumns: ["battery_temperature"];
       outputColumn: "battery_temperature";
       use: CelsiusToFahrenheit;
