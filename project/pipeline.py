@@ -45,10 +45,10 @@ def main():
                 create_database_from_csv(csv_file_path, table_name, connection)
             print("Database saved in 'data' directory successfully.")
         
-        # Remove CSV files after successful database creation
-        for csv_file_path in csv_files.values():
-            os.remove(csv_file_path)
-            print(f"Removed file {csv_file_path}")
+        # # Remove CSV files after successful database creation
+        # for csv_file_path in csv_files.values():
+        #     os.remove(csv_file_path)
+        #     print(f"Removed file {csv_file_path}")
 
     except Exception as e:
         print(f"Error occurred: {e}")
