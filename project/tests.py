@@ -37,10 +37,10 @@ class PipelineTestSuite(unittest.TestCase):
         if os.path.exists(self.db_path):
             os.remove(self.db_path)
 
-    def tearDown(self):
-        """Clean up after tests"""
-        if os.path.exists(self.db_path):
-            os.remove(self.db_path)
+    # def tearDown(self):
+    #     """Clean up after tests"""
+    #     if os.path.exists(self.db_path):
+    #         os.remove(self.db_path)
 
     def test_data_loading(self):
         """Test loading of data from CSV files"""
