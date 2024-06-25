@@ -2,6 +2,10 @@ import os
 import sqlite3
 import pandas as pd
 from kaggle.api.kaggle_api_extended import KaggleApi
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def download_and_unzip_kaggle_dataset(api, dataset, download_path):
     response = api.dataset_download_files(dataset, path=download_path, unzip=True)
@@ -25,16 +29,23 @@ def main():
     ]
     data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
 
-    # Download and unzip datasets
-    for dataset in datasets:
-        download_and_unzip_kaggle_dataset(api, dataset, data_dir)
-
-    # Define CSV file paths
-    csv_files = {
-        'agri': os.path.join(data_dir, 'Agrofood_co2_emission.csv'),
-        'temp': os.path.join(data_dir, 'GlobalLandTemperaturesByCountry.csv')
-    }
-
+    try:
+        # Your existing code here
+        # Download and unzip datasets
+        for dataset in datasets:
+            download_and_unzip_kaggle_dataset(api, dataset, data_dir)
+        logger.info(f"CSV files downloaded to: {data_dir}")
+        # Define CSV file paths
+        csv_files = {
+            'agri': os.path.join(data_dir, 'Agrofood_co2_emission.csv'),
+            'temp': os.path.join(data_dir, 'GlobalLandTemperaturesByCountry.csv')
+        }
+        for csv_file in csv_files.values():
+            logger.info(f"CSV file exists: {os.path.exists(csv_file)}")
+    except Exception as e:
+        logger.error(f"An error occurred: {e}")
+        raise
+    
     # Create SQLite database and save data from CSV files
     db_path = os.path.join(data_dir, 'pipeline.db')
     os.makedirs(os.path.dirname(db_path), exist_ok=True)

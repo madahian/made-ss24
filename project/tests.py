@@ -32,34 +32,29 @@ class PipelineTestSuite(unittest.TestCase):
     db_name = "pipeline"
     db_path = os.path.join(data_dir, f"{db_name}.db")
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         """Setup test environment"""
-        if os.path.exists(self.db_path):
-            os.remove(self.db_path)
-
-    # def tearDown(self):
-    #     """Clean up after tests"""
-    #     if os.path.exists(self.db_path):
-    #         os.remove(self.db_path)
+        if os.path.exists(cls.db_path):
+            os.remove(cls.db_path)
+        # Run the pipeline to download and process data
+        pipeline.main()
 
     def test_data_loading(self):
         """Test loading of data from CSV files"""
         for key, file_path in self.file_paths.items():
             with self.subTest(file=key):
+                print(f"Attempting to read file: {file_path}")
+                self.assertTrue(os.path.exists(file_path), f"File does not exist: {file_path}")
                 data = pd.read_csv(file_path)
                 self.assertFalse(data.empty, msg=f"{key} data should not be empty")
                 self.assertListEqual(list(data.columns), self.expected_columns[key], 
                                      msg=f"{key} data columns do not match expected columns")
 
     def test_database_integrity(self):
-        """Test the creation of the database and the integrity of its tables"""
-        # Run the pipeline to create the database
-        pipeline.main()
-
-        # Ensure the database file exists
+        """Test the integrity of the database tables"""
         self.assertTrue(os.path.exists(self.db_path), "Database file should exist after running the pipeline.")
 
-        # Check the content of the database tables
         with sqlite3.connect(self.db_path) as conn:
             for key in self.expected_columns.keys():
                 with self.subTest(table=key):
