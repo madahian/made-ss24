@@ -1,0 +1,72 @@
+pipeline Exercise4 {
+  Exercise5Extractor -> Exercise5Unarchiver;
+  Exercise5Unarchiver
+    -> Exercise5FilePicker
+    -> Exercise5TextFileInterpreter
+    -> Exercise5CSVInterpreter
+    -> Exercise5TableInterpreter
+    -> Exercise5Loader;
+
+  block Exercise5Extractor oftype HttpExtractor {
+      url: "https://gtfs.rhoenenergie-bus.de/GTFS.zip";
+  }
+
+  block Exercise5Unarchiver oftype ArchiveInterpreter {
+      archiveType: "zip";
+  }
+
+  block Exercise5FilePicker oftype FilePicker {
+      path: "/stops.txt";
+  }
+
+  block Exercise5TextFileInterpreter oftype TextFileInterpreter {}
+
+  block Exercise5CSVInterpreter oftype CSVInterpreter {
+      enclosing : '"';
+  }
+
+  valuetype int_1645 oftype integer {
+      constraints: [ value1645 ];
+  }
+
+  constraint value1645 oftype RangeConstraint {
+      lowerBound: 1645;
+      upperBound: 1645;
+  }
+
+  valuetype geo oftype text {
+        constraints: [GeoConst, GeoRange];
+    }
+
+    constraint GeoConst oftype RegexConstraint {
+        regex: /^(\d{1,3}\.\d+),\s*(\d{1,3}\.\d+)$/;
+    }
+
+    constraint GeoRange oftype RangeConstraint {
+        lowerBound: -90;
+        upperBound: 90;
+    }
+
+
+
+  
+  block Exercise5TableInterpreter oftype TableInterpreter {
+      header: true;
+      columns: [
+          "stop_id" oftype integer,
+          "stop_name" oftype text,
+          "stop_lat" oftype geo,
+          "stop_lon" oftype geo,
+          "zone_id" oftype int_1645
+      ];
+  }
+
+
+
+
+
+  block Exercise5Loader oftype SQLiteLoader {
+      table: "stops";
+      file: "./gtfs.sqlite";
+  }
+}
