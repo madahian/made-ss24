@@ -35,7 +35,7 @@ pipeline Exercise4 {
   }
 
   valuetype geo oftype text {
-        constraints: [GeoConst, GeoRange];
+        constraints: [GeoRange];
     }
 
     constraint GeoConst oftype RegexConstraint {
