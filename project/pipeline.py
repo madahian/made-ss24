@@ -30,7 +30,6 @@ def main():
     data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
 
     try:
-        # Your existing code here
         # Download and unzip datasets
         for dataset in datasets:
             download_and_unzip_kaggle_dataset(api, dataset, data_dir)
