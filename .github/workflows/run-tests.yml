@@ -1,37 +1,30 @@
 name: Run tests
-
 on: [push]
-
 jobs:
   run-tests:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-
-    - name: Set up Kaggle credentials
-      run: |
-        mkdir -p ~/.kaggle
-        echo "{\"username\":\"${{ secrets.KAGGLE_USERNAME }}\",\"key\":\"${{ secrets.KAGGLE_KEY }}\"}" > ~/.kaggle/kaggle.json
-        chmod 600 ~/.kaggle/kaggle.json
-        echo "✅ Kaggle credentials have been set successfully."
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r ./requirements.txt
-        echo "✅ Requirements installed successfully."
-
-    - name: Set up execution permissions
-      run: chmod +x project/tests.sh
-        echo "✅ Execution permissions set successfully."
-        echo "🧪 Running the tests..."
-
-    - name: Run tests script
-      run: ./project/tests.sh
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Set up Kaggle credentials
+        run: |
+          mkdir -p ~/.kaggle
+          echo "{\"username\":\"${{ secrets.KAGGLE_USERNAME }}\",\"key\":\"${{ secrets.KAGGLE_KEY }}\"}" > ~/.kaggle/kaggle.json
+          chmod 600 ~/.kaggle/kaggle.json
+          echo "✅ Kaggle credentials have been set successfully."
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./requirements.txt
+          echo "✅ Requirements installed successfully."
+      - name: Set up execution permissions
+        run: |
+          chmod +x project/tests.sh
+          echo "✅ Execution permissions set successfully."
+          echo "🧪 Running the tests..."
+      - name: Run tests script
+        run: ./project/tests.sh
