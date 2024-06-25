@@ -34,7 +34,7 @@ pipeline Exercise4 {
       upperBound: 1645;
   }
 
-  valuetype geo oftype text {
+  valuetype geo oftype decimal {
         constraints: [GeoRange];
     }
 
